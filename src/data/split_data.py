@@ -4,9 +4,18 @@
 import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from pathlib import Path
+
+
+# Chemin absolu depuis le script actuel
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+DATA_DIR = PROJECT_ROOT / 'data/raw_data'
+
+# Charger les données
+df = pd.read_csv(DATA_DIR / 'raw.csv')
 
 # 1. Charge le CSV (téléchargé avec curl)
-df = pd.read_csv('../data/raw_data/raw.csv')
+#df = pd.read_csv('../data/raw_data/raw.csv')
 
 # 2. Sépare features X et target y
 X = df.drop('silica_concentrate', axis=1)  # Toutes les features
@@ -29,10 +38,15 @@ print(f"✅ Test:  {X_test.shape}, {y_test.shape}")
 #y_test.to_csv('../data/processed_data/y_test.csv', index=False)
 
 # Sauvegarde en format dataset (.pkl)
-X_train.to_pickle('../data/processed_data/X_train.pkl')
-X_test.to_pickle('../data/processed_data/X_test.pkl')
-y_train.to_pickle('../data/processed_data/y_train.pkl')
-y_test.to_pickle('../data/processed_data/y_test.pkl')
+#X_train.to_pickle('../data/processed_data/X_train.pkl')
+#X_test.to_pickle('../data/processed_data/X_test.pkl')
+#y_train.to_pickle('../data/processed_data/y_train.pkl')
+#y_test.to_pickle('../data/processed_data/y_test.pkl')
+
+X_train.to_pickle(DATA_DIR / 'X_train.pkl')
+X_test.to_pickle(DATA_DIR / 'X_test.pkl')
+y_train.to_pickle(DATA_DIR / 'y_train.pkl')
+y_test.to_pickle(DATA_DIR / 'y_test.pkl')
 
 print("✅ Datasets sauvegardés dans ../data/processed_data/")
 print("📁 Fichiers:", os.listdir('../data/processed_data'))

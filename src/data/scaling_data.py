@@ -1,13 +1,17 @@
 # Normalisation des données
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+from pathlib import Path
 
-# 1. Charge le dataset
-X_train = pd.read_pickle('../data/processed_data/X_train.pkl')
-#X_train = pd.read_csv('../data/processed_data/X_train.csv')
-# 1. Charge le dataset
-X_test = pd.read_pickle('../data/processed_data/X_test.pkl')
-#X_test = pd.read_csv('../data/processed_data/X_test.csv')
+
+# Chemin absolu depuis le script actuel
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+DATA_DIR = PROJECT_ROOT / 'data/processed_data'
+
+# Charger les données
+X_train = pd.read_pickle(DATA_DIR / 'X_train.pkl')
+X_test = pd.read_pickle(DATA_DIR / 'X_test.pkl')
+
 
 # Sélectionne colonnes à scaler (exclut 'date')
 cols_to_scale = [col for col in X_train.columns if col != 'date']
@@ -29,8 +33,8 @@ X_test_scaled['date'] = X_test['date']
 
 
 # Sauvegarde en format dataset (.pkl)
-X_train.to_pickle('../data/processed_data/X_train_scaled.pkl')
-X_test.to_pickle('../data/processed_data/X_test_scaled.pkl')
+X_train_scaled.to_pickle(DATA_DIR / 'X_train_scaled.pkl')
+X_test_scaled.to_pickle(DATA_DIR / 'X_test_scaled.pkl')
 
 
 # test
