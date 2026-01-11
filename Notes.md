@@ -10,9 +10,10 @@ uv init --name dvc
 uv add pandas
 uv add scikit-learn
 
-.venv/bin/activate
+source .venv/bin/activate
 
 uv run python src/data/split_data.py
 uv run python src/data/scaling_data.py
 
 uv run python src/models/grid_search.py
+uv run python src/models/train_final_model.py

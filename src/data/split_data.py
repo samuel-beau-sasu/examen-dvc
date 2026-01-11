@@ -1,5 +1,4 @@
 # Split des données en ensemble d'entraînement et de test.
-# 4 datasets (X_test, X_train, y_test, y_train)
 
 import os
 import pandas as pd
@@ -36,12 +35,6 @@ print(f"✅ Test:  {X_test.shape}, {y_test.shape}")
 #X_test.to_csv('../data/processed_data/X_test.csv', index=False)
 #y_train.to_csv('../data/processed_data/y_train.csv', index=False)
 #y_test.to_csv('../data/processed_data/y_test.csv', index=False)
-
-# Sauvegarde en format dataset (.pkl)
-#X_train.to_pickle('../data/processed_data/X_train.pkl')
-#X_test.to_pickle('../data/processed_data/X_test.pkl')
-#y_train.to_pickle('../data/processed_data/y_train.pkl')
-#y_test.to_pickle('../data/processed_data/y_test.pkl')
 
 X_train.to_pickle(DATA_DIR / 'X_train.pkl')
 X_test.to_pickle(DATA_DIR / 'X_test.pkl')

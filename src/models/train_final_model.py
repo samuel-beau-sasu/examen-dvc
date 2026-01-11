@@ -1,5 +1,6 @@
 import joblib
 from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import root_mean_squared_error, r2_score, mean_absolute_error
 import numpy as np
 import pandas as pd
@@ -11,7 +12,7 @@ import json
 # Chemin absolu depuis le script actuel
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 
-PARAM_DIR = PROJECT_ROOT / 'models'
+PARAM_DIR = PROJECT_ROOT / 'models/data'
 DATA_DIR = PROJECT_ROOT / 'data/processed_data'
 METRICS_PATH = PROJECT_ROOT / 'metrics'
 
@@ -28,19 +29,17 @@ X_train = X_train[cols_to_select]
 X_test = X_test[cols_to_select]
 
 # Charger les meilleurs paramètres
-#best_params = joblib.load('../models/best_params.pkl')
-best_params = joblib.load(PARAM_DIR / 'best_params_sc.pkl')
+best_params = joblib.load(PARAM_DIR / 'best_params_rm.pkl')
 
 print(f"Paramètres chargés : {best_params}")
 
-
 # OPTION : Entraîner sur TOUTES les données (train + test)
-# pour maximiser les performances en production
-X_full = np.vstack([X_train, X_test])
-y_full = np.concatenate([y_train, y_test])
+#X_full = np.vstack([X_train, X_test])
+#y_full = np.concatenate([y_train, y_test])
 
 # Créer et entraîner le modèle final
-final_model = GradientBoostingRegressor(**best_params, random_state=42)
+#final_model = GradientBoostingRegressor(**best_params, random_state=42)
+final_model = RandomForestRegressor(**best_params, random_state=42)
 
 # Entraînement + prédictions
 final_model.fit(X_train, y_train)
@@ -57,7 +56,12 @@ print(f"✅ RMSE: {metrics['rmse']:.4f}")
 print(f"✅ MAE:  {metrics['mae']:.4f}")
 print(f"✅ R²:   {metrics['r2']:.4f}")
 
-print(metrics)
+
+# Sauvegarder les predictions
+#y_pred.to_pickle(DATA_DIR / 'y_pred.pkl')
+#y_pred.to_csv(PROJECT_ROOT / 'data/y_pred.csv', index=False)
+pd.DataFrame(y_pred).to_csv(PROJECT_ROOT / 'data/y_pred.csv', index=False)
+print("✅ y_pred sauvé en CSV (pandas)")
 
 # Sauvegarder le modèle
 joblib.dump(final_model, PARAM_DIR / 'final_model.pkl')
@@ -70,7 +74,7 @@ with open(METRICS_PATH / 'scores.json', 'w') as f:
 print(f"✅ Métriques sauvegardées: {METRICS_PATH}")
 
 # Statistiques
-print(f"\nModèle entraîné sur {len(X_full)} échantillons")
+#print(f"\nModèle entraîné sur {len(X_full)} échantillons")
 print(f"Paramètres utilisés : {final_model.get_params()}")
 
 
