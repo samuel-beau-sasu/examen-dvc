@@ -9,12 +9,12 @@ from pathlib import Path
 # Chemin absolu depuis le script actuel
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 DATA_DIR = PROJECT_ROOT / 'data/raw_data'
+DATA_PRO = PROJECT_ROOT / 'data/processed_data'
+
+DATA_PRO.mkdir(parents=True, exist_ok=True) 
 
 # Charger les données
 df = pd.read_csv(DATA_DIR / 'raw.csv')
-
-# 1. Charge le CSV (téléchargé avec curl)
-#df = pd.read_csv('../data/raw_data/raw.csv')
 
 # 2. Sépare features X et target y
 X = df.drop('silica_concentrate', axis=1)  # Toutes les features
@@ -31,16 +31,13 @@ print(f"✅ Train: {X_train.shape}, {y_train.shape}")
 print(f"✅ Test:  {X_test.shape}, {y_test.shape}")
 
 # 4. Sauvegarde chaque dataset
-#X_train.to_csv('../data/processed_data/X_train.csv', index=False)
-#X_test.to_csv('../data/processed_data/X_test.csv', index=False)
-#y_train.to_csv('../data/processed_data/y_train.csv', index=False)
-#y_test.to_csv('../data/processed_data/y_test.csv', index=False)
+X_train.to_csv(DATA_PRO / 'X_train.csv', index=False)
+X_test.to_csv(DATA_PRO / 'X_test.csv', index=False)
+y_train.to_csv(DATA_PRO / 'y_train.csv', index=False)
+y_test.to_csv(DATA_PRO / 'y_test.csv', index=False)
 
-X_train.to_pickle(DATA_DIR / 'X_train.pkl')
-X_test.to_pickle(DATA_DIR / 'X_test.pkl')
-y_train.to_pickle(DATA_DIR / 'y_train.pkl')
-y_test.to_pickle(DATA_DIR / 'y_test.pkl')
+print(f"✅ Datasets sauvegardés dans {DATA_PRO}")
 
-print("✅ Datasets sauvegardés dans ../data/processed_data/")
-print("📁 Fichiers:", os.listdir('../data/processed_data'))
+
+
 

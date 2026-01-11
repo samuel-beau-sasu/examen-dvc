@@ -9,8 +9,8 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 DATA_DIR = PROJECT_ROOT / 'data/processed_data'
 
 # Charger les données
-X_train = pd.read_pickle(DATA_DIR / 'X_train.pkl')
-X_test = pd.read_pickle(DATA_DIR / 'X_test.pkl')
+X_train = pd.read_csv(DATA_DIR / 'X_train.csv')
+X_test = pd.read_csv(DATA_DIR / 'X_test.csv')
 
 
 # Sélectionne colonnes à scaler (exclut 'date')
@@ -33,8 +33,8 @@ X_test_scaled['date'] = X_test['date']
 
 
 # Sauvegarde en format dataset (.pkl)
-X_train_scaled.to_pickle(DATA_DIR / 'X_train_scaled.pkl')
-X_test_scaled.to_pickle(DATA_DIR / 'X_test_scaled.pkl')
+X_train_scaled.to_csv(DATA_DIR / 'X_train_scaled.csv')
+X_test_scaled.to_csv(DATA_DIR / 'X_test_scaled.csv')
 
 
 # test

@@ -11,13 +11,13 @@ from pathlib import Path
 # Chemin absolu depuis le script actuel
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 DATA_DIR = PROJECT_ROOT / 'data/processed_data'
-PARAM_DIR = PROJECT_ROOT / 'models/data'
+PARAM_DIR = PROJECT_ROOT / 'models'
 
 # Charger les données
-X_train = pd.read_pickle(DATA_DIR / 'X_train_scaled.pkl')
-X_test = pd.read_pickle(DATA_DIR / 'X_test_scaled.pkl')
-y_train = pd.read_pickle(DATA_DIR / 'y_train.pkl')
-y_test = pd.read_pickle(DATA_DIR / 'y_test.pkl')
+X_train = pd.read_csv(DATA_DIR / 'X_train_scaled.csv')
+X_test = pd.read_csv(DATA_DIR / 'X_test_scaled.csv')
+y_train = pd.read_csv(DATA_DIR / 'y_train.csv')
+y_test = pd.read_csv(DATA_DIR / 'y_test.csv')
 
 
 # Sélectionne colonnes à scaler (exclut 'date')
