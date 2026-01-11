@@ -1,0 +1,5 @@
+outs:
+- md5: c527e366b0a2851cde00af235ee115da
+  size: 124
+  hash: md5
+  path: best_params_rf.pkl
